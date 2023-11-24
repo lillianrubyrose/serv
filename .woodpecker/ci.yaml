@@ -1,0 +1,13 @@
+steps:
+  build-docker:
+    image: woodpeckerci/plugin-docker-buildx
+    secrets: [docker_username, docker_password]
+    settings:
+      platforms: linux/amd64,linux/arm64/v8
+      repo: git.radial.gg/${CI_REPO_OWNER}/serv
+      registry: git.radial.gg
+      tags: latest
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
