@@ -53,9 +53,9 @@ spec:
           - name: DATA_DIR
             value: /data
           - name: PUBLIC_ENDPOINT
-            value: {{ .Values.publicEndpoint }}
+            value: {{ .Values.serv.publicEndpoint }}
           - name: API_KEY
-            value: {{ .Values.apiKey }}
+            value: {{ .Values.serv.apiKey }}
           - name: BIND_ADDR
             value: "0.0.0.0:{{ .Values.service.port }}"
       volumes:
