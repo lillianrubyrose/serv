@@ -669,8 +669,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "serv"
-version = "0.1.0"
+name = "serv-client"
+version = "0.0.0"
+
+[[package]]
+name = "serv-server"
+version = "0.0.0"
 dependencies = [
  "axum",
  "lazy_static",
