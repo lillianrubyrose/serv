@@ -10,8 +10,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo build --bin=serv-client
-  build-and-push-server:
+  build-server:
     runs-on: serv-runner-set
     steps:
+      - run: sudo apt update && sudo apt install -yyqq curl clang libssl-dev pkg-config
       - uses: actions/checkout@v4
-      - run: docker build -f src/server/Dockerfile .
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --bin=serv-server
