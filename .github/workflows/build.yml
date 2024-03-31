@@ -13,9 +13,9 @@ jobs:
   build-and-push-server:
     runs-on: serv-runner-set
     steps:
-      - run: sudo apt update && sudo apt install -yyqq curl clang
+      - run: sudo apt update && sudo apt install -yyqq curl clang libssl-dev
       - uses: actions/checkout@v4
-      - uses: docker/docker-push-action@v5
+      - uses: docker/build-push-action@v5.3.0
         with:
           context: .
           file: src/server/Dockerfile
