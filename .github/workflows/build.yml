@@ -1,0 +1,12 @@
+name: build
+on:
+  push:
+
+jobs:
+  build-and-test:
+    runs-on: serv-runner-set
+    steps:
+      - run: sudo apt update && sudo apt install -yyqq curl clang
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --all
