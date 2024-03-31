@@ -15,7 +15,7 @@ use axum::{
 };
 use miette::{IntoDiagnostic, Result};
 use rand::{distributions::Alphanumeric, Rng};
-use tokio::signal;
+use tokio::{net::TcpListener, signal};
 
 lazy_static::lazy_static! {
     static ref BIND_ADDR: String = std::env::var("BIND_ADDR").unwrap_or("127.0.0.1:8080".into());
@@ -188,10 +188,8 @@ async fn main() -> Result<()> {
         .route("/upload", post(upload))
         .route("/:path", get(get_file));
 
-    let addr = BIND_ADDR.parse().into_diagnostic()?;
-    tracing::info!("listening @ http://{}", addr);
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
+    tracing::info!("listening @ http://{}", *BIND_ADDR);
+    axum::serve(TcpListener::bind(&*BIND_ADDR).await.into_diagnostic()?, app.into_make_service())
         .with_graceful_shutdown(shutdown_signal())
         .await
         .into_diagnostic()?;
