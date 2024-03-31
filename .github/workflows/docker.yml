@@ -1,0 +1,13 @@
+name: docker
+on:
+  push:
+    branches: [mistress]
+
+jobs:
+  build-and-push-server-image:
+    runs-on: serv-runner-set
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f src/server/Dockerfile -t docker.sapphiretech.cc/serv-server:latest .
+      - run: docker login docker.sapphiretech.cc --username ci --password "${{ secrets.DOCKER_PASSWORD }}"
+      - run: docker push docker.sapphiretech.cc/serv-server:latest
