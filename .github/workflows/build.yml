@@ -3,10 +3,21 @@ on:
   push:
 
 jobs:
-  build-and-test:
+  build-client:
     runs-on: serv-runner-set
     steps:
       - run: sudo apt update && sudo apt install -yyqq curl clang
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo build --all
+      - run: cargo build --bin=serv-client
+  build-and-push-server:
+    runs-on: serv-runner-set
+    steps:
+      - run: sudo apt update && sudo apt install -yyqq curl clang
+      - uses: actions/checkout@v4
+      - uses: docker/docker-push-action@v5
+        with:
+          context: .
+          file: src/server/Dockerfile
+          push: false
+          tags: serv-server:latest
